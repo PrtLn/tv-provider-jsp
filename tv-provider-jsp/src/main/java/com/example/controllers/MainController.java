@@ -17,9 +17,5 @@ public class MainController {
 		return "index";
 	}		
 	
-//	@GetMapping("/all-clients")
-//	public String allClients() {
-//		return clientService.findAll().toString();
-//	}
 	
 }

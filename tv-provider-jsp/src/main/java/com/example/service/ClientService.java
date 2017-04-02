@@ -11,7 +11,6 @@ import com.example.dao.ClientRepository;
 import com.example.models.Client;
 
 @Service
-@Transactional
 public class ClientService {
 	
 	private final ClientRepository clientRepository;
@@ -28,5 +27,12 @@ public class ClientService {
 		return clients;
 	}
 
+	public void save(Client client) {
+		clientRepository.save(client);
+	}
+	
+	public void delete(int id) {
+		clientRepository.delete(id);
+	}
 
 }
