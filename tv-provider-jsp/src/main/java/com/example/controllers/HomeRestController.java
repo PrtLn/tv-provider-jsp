@@ -19,22 +19,22 @@ public class HomeRestController {
 		return "TV Provider Java Web Application";
 	}
 
-	@GetMapping("/all-clients")
-	public String allClients() {
-		return clientService.findAll().toString();
-	}
-	
-	@GetMapping("/save-client")
-	public String saveClient(@RequestParam String name, @RequestParam String email) {
-		Client client = new Client(name, email);
-		clientService.save(client);
-		return "Client added to database";
-	}
-	
-	@GetMapping("/delete-client")
-	public String deleteClient(@RequestParam int id) {
-		clientService.delete(id);
-		return "Client deleted from database";
-	}
+//	@GetMapping("/all-clients")
+//	public String allClients() {
+//		return clientService.findAll().toString();
+//	}
+//	
+//	@GetMapping("/save-client")
+//	public String saveClient(@RequestParam String name, @RequestParam String email) {
+//		Client client = new Client(name, email);
+//		clientService.save(client);
+//		return "Client added to database";
+//	}
+//	
+//	@GetMapping("/delete-client")
+//	public String deleteClient(@RequestParam int id) {
+//		clientService.delete(id);
+//		return "Client deleted from database";
+//	}
 	
 }

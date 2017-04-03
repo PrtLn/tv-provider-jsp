@@ -1,0 +1,62 @@
+.invisible-at-first {
+	display: none;
+}
+
+body {
+}
+
+.footer {
+	line-height: 33px;
+	background: #222222;
+	color: #808080;
+	text-align: center;
+    margin-top: 40px;
+}
+.navbar-brand {
+	font-size: 1.5em;
+}
+
+.navbar {
+  font-size: 1.3em;
+  height: 3em;
+  margin: 0 auto;
+  border-radius: 0;
+}
+
+.jumbotron .img-responsive {
+  margin: 0 auto;
+}
+
+.btn {
+	background: #329af0;
+    color: #edf2ff;
+    letter-spacing: 1px;  
+    font-size: 1.2em;  
+    margin: 20px auto;
+    padding: 6px 24px 6px 24px;  
+    transition: all 0.5s;  
+    border: none;	
+}
+
+.btn:hover {
+	background: #862e9c;
+    color: #e6fcf5;
+}
+
+.bttns {
+	width: 50%;
+	margin:0 auto;
+	margin-bottom: 50px;
+}
+
+.glyphicon {
+	color: #862e9c;
+}
+
+.transaction_list {
+	float: right;
+}
+
+.client_list {
+	float: left;
+}

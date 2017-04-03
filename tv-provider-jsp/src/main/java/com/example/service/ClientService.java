@@ -31,6 +31,10 @@ public class ClientService {
 		clientRepository.save(client);
 	}
 	
+	public Client findClient(int id) {
+		return clientRepository.findOne(id);
+	}
+	
 	public void delete(int id) {
 		clientRepository.delete(id);
 	}
