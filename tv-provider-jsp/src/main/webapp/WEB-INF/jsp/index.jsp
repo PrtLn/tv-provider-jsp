@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<%@ taglib prefix="spring" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
@@ -13,8 +12,8 @@
     
     <title>TV Provider</title>
     
-    <link rel="stylesheet" href='<spring:url value="static/css/bootstrap.min.css"/>' type="text/css">
-    <link rel="stylesheet" href='<spring:url value="static/css/style.css"/>' type="text/css">
+    <link rel="stylesheet" href='<c:url value="static/css/bootstrap.min.css"/>' type="text/css">
+    <link rel="stylesheet" href='<c:url value="static/css/style.css"/>' type="text/css">
     <!-- <link href="static/css/bootstrap.min.css" rel="stylesheet" /> -->
     <!-- <link href="static/css/style.css" rel="stylesheet" /> -->
     
@@ -46,8 +45,10 @@
 					<h3>TV Provider is your best guide in this wild world</h3>
 					
 					<div class="bttns">
-					    <button id="client_list" type="text" class="btn client_list">Client List</button>
-					    <button id="transaction_list" type="text" class="btn transaction_list">Transaction List</button>
+					    <button class="btn client_list"
+					    		onclick="window.location.href='/all-clients'">Client List</button>
+					    <button class="btn transaction_list"
+					    		onclick="window.location.href='/all-transactions'">Transaction List</button>
 					</div>
 				</div>
 				
@@ -58,8 +59,13 @@
 		<c:when test="${mode == 'MODE_CLIENTS'}">
 		<div class="container text-left" id="clientDiv">
 		<h3>Client List</h3>
-			<hr>
-			<div class="table-responsive">
+			<div class="container">
+		    <div class="row">
+		        <div class="panel panel-primary filterable">
+		            <div class="panel-heading">
+		                <h3 class="panel-title">Clients</h3>
+		            </div>
+				<div class="table-responsive">
 				<table class="table table-striped table-bordered text-left">
 					<thead>
 						<tr>
@@ -76,24 +82,25 @@
 							<td>${client.clientId}</td>
 							<td>${client.name}</td>
 							<td>${client.email}</td>
-							<td>${client.tariffId}</td>
+							<td>${client.tariff}</td>
 							<th><a href="update-client?id=${client.clientId}">
 								<span class="glyphicon glyphicon-eye-open"></span></a></th>
 						</tr>						
 					</c:forEach>
 					</tbody>					
 				</table>
-				<div class="form-group">
-					<a href="new-client?id=${client.clientId}"><input type="submit" class="btn btn-primary" value="Add New Client"></a>
-				</div>		
+		<hr>
+			<a href="new-client?id=${client.clientId}"><input type="submit" class="btn btn-add" value="Add New Client"></a>
 			</div>
+	        </div>
 		</div>
+		</div>
+		
 		</c:when>
 
 		<c:when test="${mode == 'MODE_NEW' || mode == 'MODE_UPDATE'}">
 		<div class="container text-center">
 		<h3>Manage Client's Count</h3>
-			<hr>
 			<form class="well form-horizontal" method="post" action="save-client">
 				<fieldset>
 				<input type="hidden" name="clientId" value="${client.clientId}">
@@ -152,22 +159,21 @@
 				  <label class="col-md-4 control-label">Tariff</label>  
 				    <div class="col-md-4 inputGroupContainer">
 				    <div class="input-group">
-				        <span class="input-group-addon"><i class="glyphicon glyphicon-paperclip"></i></span>
-				  	<input type="radio" class="col-sm-2" name="tariffId" value="STANDART">
+				        <span class="input-group-addon" style="border-right: 1px solid #bcbcbc"><i class="glyphicon glyphicon-paperclip"></i></span>
+				  	<input type="radio" class="col-sm-2" name="tariff" value="STANDART" checked="checked">
 							<div class="col-sm-5">STANDART</div>
-					<input type="radio" class="col-sm-2" name="tariffId" value="VIP">
+					<input type="radio" class="col-sm-2" name="tariff" value="VIP">
 							<div class="col-sm-1">VIP</div>
 				    </div>
 				  </div>
 				</div>
-				
+			<hr>
 				<div class="form-group">
 				  <label class="col-md-4 control-label"></label>
 				  <div class="col-md-4">
-				    <button type="submit" class="btn btn-warning">Save</button>
+				      <button type="submit" class="btn btn-save">SAVE</button>
 				  </div>
-				</div>
-				
+				</div>				
 				</fieldset>
 			</form>			
 		</div>
@@ -176,34 +182,47 @@
 		<c:when test="${mode == 'MODE_TRANSACTIONS'}">
 		<div class="container" id="transactionDiv"> 
 		<h3>Transaction List</h3>
-		
-		<!-- Add Filter for date_expiry and idClient -->
-		
-			<hr>
-			<div class="table-responsive">
-			<table class="table table-striped table-bordered">
-				<thead>
-					<tr>
-						<th>Id</th>
-						<th>Client ID</th>
-						<th>Client Name</th>
-						<th>Date of payment</th>
-					</tr>
-				</thead>
+	    <div class="row">
+	        <div class="panel panel-primary filterable">
+	            <div class="panel-heading">
+	                <h3 class="panel-title">Transactions</h3>
+	                <div class="pull-right">
+	                    <button class="btn btn-filter">
+	                    	<span class="glyphicon glyphicon-search"></span> Filter</button>
+	                </div>
+	            </div>
+	            <div class="table-responsive">
+            	<table class="table table-striped table-bordered">
+                <thead>
+                    <tr class="filters">
+                        <th><input type="text" class="form-control" name="id" placeholder="ID" disabled></th>
+                        <th><input type="text" class="form-control" name="client_id" placeholder="Client ID" disabled></th>
+                        <th><input type="text" class="form-control" name="name" placeholder="Client Name" disabled></th>
+                        <th><input type="text" class="form-control" name="date_payment" placeholder="Payment Date" disabled></th>
+                        <th><input type="text" class="form-control" name="date_expiry" placeholder="Expiry Date" disabled></th>
+                    </tr>
+                </thead>
+
 				<tbody>
 				<c:forEach var="transaction" items="${transactions}">
 					<tr>
 						<td>${transaction.id}</td>
 						<td>${transaction.clientId}</td>
-						<td>${transaction.clientName}</td>
+						<td>${client.name}</td>
 						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" 
-									value="${transaction.date_transaction}" 
-							/>${transaction.date_transaction}</td>						
+									value="${client.date_payment}" 
+							/>${client.date_payment}</td>
+						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" 
+								value="${client.date_expiry}" 
+						/>${client.date_expiry}</td>					
 					</tr>
 				</c:forEach>
 				</tbody>
-			</table>		
-			</div>
+				</table>	
+	        </div>
+		</div>	
+		</div>
+			<hr>
 		</div>
 		</c:when>		
 	</c:choose>
@@ -211,8 +230,11 @@
     <div class="footer navbar-fixed-bottom">
       <span>&copy; TV Provider. 2017</span>
     </div>
-
-	<script src="static/js/jquery-3.2.0.min.js"></script>    
-    <script src="static/js/bootstrap.min.js"></script>
+   
 </body>
+
+	<script src="static/js/jquery-3.2.0.min.js" type="text/javascript"></script>    
+    <script src="static/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="static/js/jquery.placeholder.js" type="text/javascript"></script>
+    <script src="static/js/script.js" type="text/javascript"></script>
 </html>

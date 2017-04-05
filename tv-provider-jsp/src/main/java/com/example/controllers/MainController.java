@@ -48,7 +48,7 @@ public class MainController {
 		client.setDatePayment(new Date());
 		clientService.save(client);
 		request.setAttribute("clients", clientService.findAll());
-		request.setAttribute("mode", "MODE_NEW");
+		request.setAttribute("mode", "MODE_CLIENTS");
 		return "index";
 	}
 	

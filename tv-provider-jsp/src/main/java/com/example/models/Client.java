@@ -28,21 +28,26 @@ public class Client implements Serializable {
 	private float money;
 	
 	@Enumerated(value = EnumType.ORDINAL)
-	@Column(name = "tariff_id")
-	private Tariff tariffId;
+	@Column(name = "tariff")
+	private Tariff tariff;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date datePayment;
+	@Temporal(TemporalType.TIME)
+	private Date dateExpiry;
 		
 	public Client() {}
-	
-	public Client(String name, String email, float money, Tariff tariff, Date datePayment) {
+
+	public Client(int clientId, String name, String email, float money, Tariff tariff, Date datePayment,
+			Date dateExpiry) {
 		super();
+		this.clientId = clientId;
 		this.name = name;
 		this.email = email;
 		this.money = money;
-		this.tariffId = tariff;
+		this.tariff = tariff;
 		this.datePayment = datePayment;
+		this.dateExpiry = dateExpiry;
 	}
 
 	public int getClientId() {
@@ -78,12 +83,12 @@ public class Client implements Serializable {
 	}
 
 	@Enumerated(EnumType.ORDINAL)
-	public Tariff getTariffId() {
-		return tariffId;
+	public Tariff getTariff() {
+		return tariff;
 	}
 
-	public void setTariffId(Tariff tariffId) {
-		this.tariffId = tariffId;
+	public void setTariff(Tariff tariff) {
+		this.tariff = tariff;
 	}
 
 	public Date getDatePayment() {
@@ -93,11 +98,19 @@ public class Client implements Serializable {
 	public void setDatePayment(Date datePayment) {
 		this.datePayment = datePayment;
 	}
+	
+	public Date getDateExpiry() {
+		return dateExpiry;
+	}
+
+	public void setDateExpiry(Date dateExpiry) {
+		this.dateExpiry = dateExpiry;
+	}
 
 	@Override
 	public String toString() {
 		return "Client [clientId=" + clientId + ", name=" + name + ", email=" + email + ", money=" + money + ", tariff="
-				+ tariffId + ", datePayment=" + datePayment + "]";
+				+ tariff + ", datePayment=" + datePayment + ", dateExpiry=" + dateExpiry + "]";
 	}
 	
 }
