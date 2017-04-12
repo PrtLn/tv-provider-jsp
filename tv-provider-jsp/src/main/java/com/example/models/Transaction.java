@@ -1,36 +1,45 @@
 package com.example.models;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "transactions")
+@Table(name="transactions")
 public class Transaction implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "id")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column(name = "client_id")
-	private int clientId;
-		
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="client")
+	private Client client;
+	
+	private String action;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+    	
 	public Transaction() {}
 
-	public Transaction(int clientId) {
-		super();
-		this.clientId = clientId;
+	public Transaction(Client client, String action, Date date) {
+		this.client = client;
+		this.action = action;
+		this.date = date;
+		System.out.println("FROM CTOR TRANSACTION");
 	}
 
 	public int getId() {
@@ -41,16 +50,34 @@ public class Transaction implements Serializable {
 		this.id = id;
 	}
 
-	public int getClientId() {
-		return clientId;
+	public Client getClient() {
+		return client;
 	}
 
-	public void setClientId(int clientId) {
-		this.clientId = clientId;
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public String getAction() {
+		return action;
+	}
+
+	public void setAction(String action) {
+		this.action = action;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	@Override
 	public String toString() {
-		return "Transaction [id=" + id + ", clientId=" + clientId + "]";
+		return "Transaction [id=" + id + ", client=" + client + ", action=" + action + ", date=" + date + "]";
 	}
+
+	
 }

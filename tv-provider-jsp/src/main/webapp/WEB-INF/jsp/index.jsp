@@ -70,10 +70,10 @@
 					<thead>
 						<tr>
 							<th>Id</th>
-							<th>Name</th>
-							<th>Email</th>
+							<th>Client Name</th>
+							<th>Client Email</th>
 							<th>Tariff</th>
-							<th></th>
+							<th>Manage Account</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -84,7 +84,10 @@
 							<td>${client.email}</td>
 							<td>${client.tariff}</td>
 							<th><a href="update-client?id=${client.clientId}">
-								<span class="glyphicon glyphicon-eye-open"></span></a></th>
+								<span class="glyphicon glyphicon-eye-open"></span></a>
+								<%-- <a href="delete-client?id=${client.clientId}">
+								<span class="glyphicon glyphicon-trash"></span></a> --%>
+								</th>
 						</tr>						
 					</c:forEach>
 					</tbody>					
@@ -95,12 +98,13 @@
 	        </div>
 		</div>
 		</div>
+		</div>
 		
 		</c:when>
 
 		<c:when test="${mode == 'MODE_NEW' || mode == 'MODE_UPDATE'}">
 		<div class="container text-center">
-		<h3>Manage Client's Count</h3>
+		<h3>Manage Client's Account</h3>
 			<form class="well form-horizontal" method="post" action="save-client">
 				<fieldset>
 				<input type="hidden" name="clientId" value="${client.clientId}">
@@ -131,26 +135,6 @@
 				    <div class="input-group">
 				        <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
 				  <input name="money" placeholder="Avalable Money" class="form-control" value="${client.money}" type="text">
-				    </div>
-				  </div>
-				</div>
-				
-				<div class="form-group">
-				  <label class="col-md-4 control-label">Date Payment</label>  
-				    <div class="col-md-4 inputGroupContainer">
-				    <div class="input-group">
-				        <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-				  <input name="date_payment" placeholder="Date Payment" class="form-control" value="" type="text">
-				    </div>
-				  </div>
-				</div>
-				
-				<div class="form-group">
-				  <label class="col-md-4 control-label">Date Expiry</label>  
-				    <div class="col-md-4 inputGroupContainer">
-				    <div class="input-group">
-				        <span class="input-group-addon"><i class="glyphicon glyphicon-hourglass"></i></span>
-				  <input name="date_expiry" placeholder="Date Expiry" class="form-control" value="" type="text">
 				    </div>
 				  </div>
 				</div>
@@ -196,27 +180,25 @@
                 <thead>
                     <tr class="filters">
                         <th><input type="text" class="form-control" name="id" placeholder="ID" disabled></th>
-                        <th><input type="text" class="form-control" name="client_id" placeholder="Client ID" disabled></th>
+                        <th><input type="text" class="form-control" name="clientId" placeholder="Client ID" disabled></th>
                         <th><input type="text" class="form-control" name="name" placeholder="Client Name" disabled></th>
-                        <th><input type="text" class="form-control" name="date_payment" placeholder="Payment Date" disabled></th>
-                        <th><input type="text" class="form-control" name="date_expiry" placeholder="Expiry Date" disabled></th>
+                        <th><input type="text" class="form-control" name="action" placeholder="Type of Action" disabled></th>
+                        <th><input type="text" class="form-control" name="date" placeholder="Transaction Time" disabled></th>
                     </tr>
                 </thead>
 
 				<tbody>
-				<c:forEach var="transaction" items="${transactions}">
+				<c:forEach var="transaction" items="${transactions}" >
 					<tr>
 						<td>${transaction.id}</td>
-						<td>${transaction.clientId}</td>
-						<td>${client.name}</td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" 
-									value="${client.date_payment}" 
-							/>${client.date_payment}</td>
-						<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" 
-								value="${client.date_expiry}" 
-						/>${client.date_expiry}</td>					
+						<td>${transaction.client.clientId}</td>
+						<td>${transaction.client.name}</td>
+						<td>${transaction.action}</td>
+						<td><fmt:formatDate pattern="dd-MM-yyyy HH:mm:ss" 
+									value="${transaction.date}"/></td>					
 					</tr>
 				</c:forEach>
+				
 				</tbody>
 				</table>	
 	        </div>

@@ -3,8 +3,6 @@ package com.example.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.stereotype.Service;
 
 import com.example.dao.ClientRepository;
